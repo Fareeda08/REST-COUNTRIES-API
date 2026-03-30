@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rest-countries</title>
+
+    <script
+      src="https://kit.fontawesome.com/0efbb5ee5e.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <script type="module" src="./script.js"></script>
+  </head>
+  <body class="light-mode">
+    <header>
+      <h2>Where in the world?</h2>
+
+      <div class="desktop-mode">
+        <!-- desktop mode icons -->
+        <!-- <i class="fa-solid fa-sun"></i> -->
+        <i class="fa-solid fa-moon"></i>
+        <p>Dark mode</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="country-search-container">
+        <form>
+          <input
+            name="country"
+            id="country-search"
+            type="text"
+            placeholder="Search for a country..."
+          />
+        </form>
+
+        <div class="dropdown-container">
+          <span>
+            <p>Filter by region</p>
+            <i class="fa-solid fa-angle-down"></i>
+          </span>
+
+          <div class="overlay hidden"></div>
+
+          <ul class="dropdown regions hidden">
+            <li>Africa</li>
+            <li>Americas</li>
+            <li>Asia</li>
+            <li>Europe</li>
+            <li>Oceania</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="countries-data-field">
+        <ul></ul>
+      </section>
+    </main>
+  </body>
+</html>
