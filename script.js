@@ -38,12 +38,29 @@ desktopMode.addEventListener("click", () => {
 
 countrySearchField.addEventListener("submit", function (ev) {
   ev.preventDefault();
-  const country = (
-    countrySearch.value.slice(0, 1).toUpperCase() + countrySearch.value.slice(1)
-  ).trim();
+  const country = countrySearch.value.toLowerCase().trim();
 
-  renderCountry(country);
+  renderSearchCountries(country);
+  countrySearch.value = "";
 });
+
+const renderSearchCountries = async function (entry) {
+  try {
+    const data = await fetchCountryData();
+
+    let markup = data
+      .filter((data) => data.name.toLowerCase().includes(entry))
+      .map((country) => generateHomePage(country))
+      .join("");
+
+    markup =
+      markup !== "" ? markup : `<p>${entry} not found. Please try again</p>`;
+
+    renderMarkup(markup, countriesDataField);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 main.addEventListener("click", function (ev) {
   const back = ev.target.closest(".back");
@@ -142,7 +159,7 @@ const renderSearchField = function () {
             name="country"
             id="country-search"
             type="text"
-            placeholder="       Search for a country..."
+            placeholder="Search for a country..."
           />
         </form>
 
@@ -220,20 +237,16 @@ const renderCountry = async function (country) {
            <p>
              <span class="title">Border countries: </span>
            </p>
-           <ul>
-
-            
-${
-  data.borders
-    ? data.borders
-        .map((border) => {
-          return `<li>${datas.find((data) => data.alpha2Code === border || data.alpha3Code === border).name}</li>`;
-        })
-        .join("")
-    : "None"
-}
-             
-            
+           <ul>            
+             ${
+               data.borders
+                 ? data.borders
+                     .map((border) => {
+                       return `<li>${datas.find((data) => data.alpha2Code === border || data.alpha3Code === border).name}</li>`;
+                     })
+                     .join("")
+                 : "None"
+             }
            </ul>
          </li>
        </ul>
@@ -248,7 +261,6 @@ ${
       }
     });
 
-    const markup = `<p>${country} not found. Please try again</p>`;
     renderMarkup(markup, countriesDataField);
   } catch (err) {
     console.log(err);
