@@ -221,7 +221,7 @@ const renderCountry = async function (country) {
            <span class="title">Sub Region: </span>${data.subregion}
          </li>
          <li class="country-capital">
-           <span class="title">Capital:</span> ${data.capital}
+           <span class="title">Capital:</span> ${data.capital ? data.capital : 'None'}
          </li>
          <li class="country-domain">
            <span class="title">Top Level Domain: </span>${data.topLevelDomain[0]}
