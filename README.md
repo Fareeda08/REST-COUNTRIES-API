@@ -2,8 +2,8 @@ This is a solution to the [REST Countries API with color theme switcher challeng
 
 # Links 
 
-- Solution URL: (https://your-solution-url.com)
-- Live Site URL: (https://your-live-site-url.com)
+- Solution URL: (https://github.com/Fareeda08/REST-COUNTRIES-API.git)
+- Live Site URL: (https://fareeda-weather-app-api.netlify.app/)
 
 # Built with
 

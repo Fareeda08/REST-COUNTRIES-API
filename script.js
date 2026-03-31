@@ -36,27 +36,11 @@ desktopMode.addEventListener("click", () => {
   }
 });
 
-dropdownContainer.addEventListener("click", function (ev) {
-  dropdown.classList.toggle("hidden");
-  overlay.classList.toggle("hidden");
-
-  const li = ev.target.closest("li");
-  if (!li) return;
-
-  dropdownContainer
-    .querySelectorAll("li")
-    .forEach((li) => li.classList.remove("selected"));
-  li.classList.add("selected");
-  const region = li.textContent;
-
-  renderRegionCountries(region);
-});
-
 countrySearchField.addEventListener("submit", function (ev) {
   ev.preventDefault();
-  const country =
-    countrySearch.value.slice(0, 1).toUpperCase() +
-    countrySearch.value.slice(1);
+  const country = (
+    countrySearch.value.slice(0, 1).toUpperCase() + countrySearch.value.slice(1)
+  ).trim();
 
   renderCountry(country);
 });
@@ -74,9 +58,32 @@ main.addEventListener("click", function (ev) {
   }
 
   const borderCountry = ev.target.closest(".country-border-countries li");
-  if (!borderCountry) return;
-  console.log(borderCountry);
-  renderCountry(borderCountry.textContent);
+  if (borderCountry) {
+    console.log(borderCountry);
+    renderCountry(borderCountry.textContent);
+  }
+
+  const dropdownContainer = ev.target.closest(".dropdown-container");
+
+  if (dropdownContainer) {
+    const dropdown = dropdownContainer.querySelector(".dropdown");
+    const overlay = dropdownContainer.querySelector(".overlay");
+
+    dropdown.classList.toggle("hidden");
+    overlay.classList.toggle("hidden");
+
+    const li = ev.target.closest("li");
+    if (li) {
+      dropdownContainer
+        .querySelectorAll("li")
+        .forEach((li) => li.classList.remove("selected"));
+      li.classList.add("selected");
+      const region = li.textContent;
+
+      const countriesDataField = main.querySelector(".countries-data-field ul"); //re-rendered
+      renderRegionCountries(region, countriesDataField);
+    }
+  }
 });
 
 const fetchCountryData = async function () {
@@ -91,9 +98,7 @@ const fetchCountryData = async function () {
 };
 
 const generateHomePage = function (country) {
-  // <p class="country-name"><a href=${country.name}>${country.name}</a></p>
-  const markup = `    
-    
+  const markup = `        
     <li>
              <img src="${country.flags.svg}" alt="" />
 
@@ -151,7 +156,7 @@ const renderSearchField = function () {
 
           <ul class="dropdown regions hidden">
             <li>Africa</li>
-            <li>America</li>
+            <li>Americas</li>
             <li>Asia</li>
             <li>Europe</li>
             <li>Oceania</li>
@@ -234,11 +239,12 @@ ${
        </ul>
      </div>
    </section>
- </section>;
+ </section>
 `;
 
         renderMarkup(markup, main);
         return;
+      } else {
       }
     });
 
@@ -249,14 +255,15 @@ ${
   }
 };
 
-const renderRegionCountries = async function (region) {
+const renderRegionCountries = async function (region, parentEl) {
   try {
     const data = await fetchCountryData();
 
     const countriesData = data.filter((country) => country.region === region);
 
     const markup = `${countriesData.map((countryData) => generateHomePage(countryData)).join("")}`;
-    renderMarkup(markup, countriesDataField);
+
+    renderMarkup(markup, parentEl);
   } catch (err) {
     console.log(err);
   }

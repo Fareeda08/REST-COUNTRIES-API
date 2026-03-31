@@ -98,7 +98,7 @@ li.country-border-countries ul {
 }
 
 .back {
-  width: 6%;
+  width: 115px;
   justify-content: space-between;
   padding: 0rem 1rem;
   border-radius: 5px;
@@ -370,10 +370,6 @@ ul {
   .country-border-countries p {
     width: 30%;
   }
-
-  .back {
-    width: 10%;
-  }
 }
 
 @media (max-width: 540px) {
@@ -433,6 +429,7 @@ ul {
 
   .country-info li {
     width: 80%;
+    flex-direction: column;
   }
 
   .country-border-countries p {
@@ -445,5 +442,9 @@ ul {
 
   .country-details {
     align-items: normal;
+  }
+
+  .back {
+    width: 30%;
   }
 }
